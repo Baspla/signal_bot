@@ -2,8 +2,7 @@ import logging
 
 import requests
 
-from util.constants import HOSTNAME, TELNUMBER
-
+from util.constants import HOSTNAME, TELNUMBER, PROTOCOL
 
 logger = logging.getLogger("receiver")
 
