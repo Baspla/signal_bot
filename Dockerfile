@@ -10,5 +10,6 @@ RUN pip install --target=/app -r /app/requirements.txt
 FROM gcr.io/distroless/python3-debian10
 COPY --from=builder /app /app
 WORKDIR /app
+RUN mkdir -p /app/logs
 ENV PYTHONPATH /app
 CMD ["/app/src/core.py"]

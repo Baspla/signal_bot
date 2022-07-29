@@ -38,8 +38,7 @@ update_decorators = list()
 
 # noinspection PyUnresolvedReferences
 def main():
-
-    logging.basicConfig(handlers=[logging.FileHandler("../log/signalBot.log",'a', 'utf-8'), logging.StreamHandler()],
+    logging.basicConfig(handlers=[logging.FileHandler("../log/signalBot.log", 'a', 'utf-8'), logging.StreamHandler()],
                         level=LOGGING_LEVEL)
 
     # Register Decorators # Add new Decorators here
@@ -52,7 +51,8 @@ def main():
     # Start Core Loop
     tl = Timeloop()
     logging.getLogger("timeloop").setLevel(logging.CRITICAL)
-    logger.info("Polling every %i seconds",POLLING_INTERVAL)
+    logger.info("Polling every %i seconds", POLLING_INTERVAL)
+
     @tl.job(interval=timedelta(seconds=POLLING_INTERVAL))
     def receive_polling():
         logger.debug("Fetching updates")
