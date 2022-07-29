@@ -26,6 +26,7 @@ Kann zum Testen ersetzt werden.
 
 - GroupId an die gesendet wird ist (bisher immer) "group." + BASE64(groupId aus update)
 - Der REST API Wrapper kann keine Reciepts versenden (gelesen)
+- requirements mit `pip3 freeze > requirements.txt` speichern
 ## TODOs
 
 - Dekoratoren in Klassen auslagern
