@@ -28,5 +28,5 @@ def translate(source_information, data_message, context, message):
         sendText(context, f"Meintest du: {result.text}")
         pass
 
-    if randint(0, 100) < 1:
+    if randint(0, 99) < 1:
         asyncio.run(translator())
