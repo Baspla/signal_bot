@@ -1,3 +1,4 @@
+import logging
 import os
 
 HOSTNAME = os.environ.get('SIGNAL_HOST')
@@ -13,3 +14,5 @@ if POLLING_INTERVAL is None:
     POLLING_INTERVAL = 15
 else:
     POLLING_INTERVAL = int(POLLING_INTERVAL)
+
+LOGGING_LEVEL = logging.DEBUG

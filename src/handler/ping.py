@@ -1,19 +1,18 @@
 import logging
 
-from decorator.message import message
+from decorator.message import Message
 from signal_cli.sender import sendText
 
-from util.group_utils import encodeGroupId
+from util.group_utils import groupContextFromId
 
 logger = logging.getLogger("ping")
 
 
-@message(regex="/ping")
+@Message(regex="^/ping$")
 def test3(source_information, data_message, message):
     if "groupInfo" in data_message:
-        logger.info("Ping in group %s (enc: %s)",
-                    {data_message["groupInfo"]["groupId"]},
-                    {encodeGroupId(data_message["groupInfo"]["groupId"])})
-        sendText(encodeGroupId(data_message["groupInfo"]["groupId"]), "Pong!")
+        internal = data_message["groupInfo"]["groupId"]
+        group_context = groupContextFromId(internal)
+        sendText(group_context, "Pong!")
     else:
         sendText(source_information.source_uuid, "Pong!")

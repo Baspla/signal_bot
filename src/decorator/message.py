@@ -4,8 +4,8 @@ import re
 from model.update_decorator import UpdateDecorator
 from model.update_handler import UpdateHandler
 
-messageHandlers = list()
 logger = logging.getLogger("messageDecorator")
+messageHandlers = list()
 
 
 class MessageHandler(UpdateHandler):
@@ -15,39 +15,45 @@ class MessageHandler(UpdateHandler):
 
 
 class MessageDecorator(UpdateDecorator):
+    def __init__(self):
+        pass
 
     def process_update(self, source_information, data_message):
-        for x in range(len(messageHandlers)):
-            handler = messageHandlers[x]
-            if "message" in data_message:
-                message = data_message["message"]
-                if message is not None:
-                    if isinstance(handler, MessageHandler):
-                        logger.debug("Using RegEx: %s", handler.regex)
+        logger.debug("Processing update")
+        if "message" in data_message:
+            msg = data_message["message"]
+            if msg is not None:
+                for x in range(len(messageHandlers)):
+                    handler = messageHandlers[x]
+                    if isinstance(handler, MessageHandler):  # Möglicherweise überflüssig
+                        logger.debug("Using RegEx %s on message %s", handler.regex, msg)
                         try:
                             pattern = re.compile(handler.regex)
-                            if pattern.match(message):
-                                handler.callback(source_information, data_message, message)
+                            if pattern.match(msg):
+                                logger.debug("Handler %s matched RegEx: %s", handler, handler.regex)
+                                handler.callback(source_information, data_message, msg)
                         except re.error:
                             logger.error("Invalid RegEx: %s", messageHandlers[x].regex)
+            else:
+                logger.debug("Empty message")
+        else:
+            logger.debug("Missing message")
 
     def check_update(self, source_information, data_message):
         if "message" in data_message:
-            logger.debug("Check passed ✔️")
+            logger.debug("Check passed")
             msg = data_message["message"]
             return msg is not None
         return False
 
 
 # Decorator
-def message(_func=None, *, regex=".*"):
-    def decorator_every(func):
-        handler = MessageHandler(func, regex)
-        messageHandlers.append(handler)
-        logger.debug("Registered MessageHandler %s",handler)
-        return func
+class Message:
+    def __init__(self, regex=".*"):
+        self.regex = regex
 
-    if _func is None:
-        return decorator_every
-    else:
-        return decorator_every(_func)
+    def __call__(self, function):
+        handler = MessageHandler(function, self.regex)
+        messageHandlers.append(handler)
+        logger.debug("Registered MessageHandler %s", handler)
+        return function

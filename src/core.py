@@ -4,7 +4,7 @@ import time
 from datetime import timedelta
 from decorator.message import MessageDecorator
 from signal_cli.receiver import signalPolling
-from util.constants import POLLING_INTERVAL
+from util.constants import POLLING_INTERVAL, LOGGING_LEVEL
 from util.envelope_utils import getSourceInformation
 from timeloop import Timeloop
 
@@ -25,7 +25,6 @@ def process_envelope(envelope):
 def registerDecorator(update_decorator):
     logger.info("Registered UpdateDecorator %s", update_decorator)
     update_decorators.append(update_decorator)
-    pass
 
 
 #
@@ -36,11 +35,15 @@ polling_function = signalPolling
 update_decorators = list()
 
 
+# noinspection PyUnresolvedReferences
 def main():
-    logging.basicConfig(handlers=[logging.FileHandler("../log/signalBot.log"), logging.StreamHandler()], level=logging.INFO)
+    logging.basicConfig(handlers=[logging.FileHandler("../log/signalBot.log"), logging.StreamHandler()],
+                        level=LOGGING_LEVEL)
 
     # Register Decorators # Add new Decorators here
     registerDecorator(MessageDecorator())
+
+    import handler.ping
 
     # Start Core Loop
     tl = Timeloop()
