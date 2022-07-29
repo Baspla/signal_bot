@@ -16,5 +16,5 @@ def sendText(recepient, message):
         ]
     }
     logger.debug("Sent message '%s' to %s", message, recepient)
-    post_response = requests.post(f"https://{HOSTNAME}/v2/send", json=body)
+    post_response = requests.post(f"https://{HOSTNAME}/v2/send", json=body,timeout=60)
     logger.debug("Response: %s", post_response)

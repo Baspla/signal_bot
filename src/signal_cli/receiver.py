@@ -12,7 +12,7 @@ def signalPolling():
     try:
         uri = f"{PROTOCOL}://{HOSTNAME}/v1/receive/{TELNUMBER}"
         logger.debug("Fetching Signal-CLI updates from %s",uri)
-        response = requests.get(uri)
+        response = requests.get(uri,timeout=120)
         logger.debug("Parsing JSON Response")
         results = response.json()
         logger.debug("Fetched update: %s", results)
