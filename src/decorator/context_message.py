@@ -2,19 +2,20 @@ import logging
 
 from model.update_decorator import UpdateDecorator
 from model.update_handler import UpdateHandler
+from util.context import getOptionalGroupContext
 from util.regex import regexCheck
 
-logger = logging.getLogger("messageDecorator")
-messageHandlers = list()
+logger = logging.getLogger("ContextMessageDecorator")
+handlers = list()
 
 
-class MessageHandler(UpdateHandler):
+class ContextMessageHandler(UpdateHandler):
     def __init__(self, callback, regex):
         super().__init__(callback)
         self.regex = regex
 
 
-class MessageDecorator(UpdateDecorator):
+class ContextMessageDecorator(UpdateDecorator):
     def __init__(self):
         pass
 
@@ -23,11 +24,14 @@ class MessageDecorator(UpdateDecorator):
         if "message" in data_message:
             msg = data_message["message"]
             if msg is not None:
-                for x in range(len(messageHandlers)):
-                    handler = messageHandlers[x]
-                    if isinstance(handler, MessageHandler):  # Möglicherweise überflüssig
+                for x in range(len(handlers)):
+                    handler = handlers[x]
+                    if isinstance(handler, ContextMessageHandler):  # Möglicherweise überflüssig
                         if regexCheck(handler.regex, msg):
-                            handler.callback(source_information, data_message, msg)
+                            context = getOptionalGroupContext(data_message)
+                            if context is None:
+                                context = source_information.source_uuid
+                            handler.callback(source_information, data_message, context, msg)
             else:
                 logger.debug("Empty message")
         else:
@@ -41,13 +45,13 @@ class MessageDecorator(UpdateDecorator):
         return False
 
 
-# Decorator
-class Message:
+# Besserer Message Decorator der den richtigen Antwort Context ermittelt
+class ContextMessage:
     def __init__(self, regex=".*"):
         self.regex = regex
 
     def __call__(self, function):
-        handler = MessageHandler(function, self.regex)
-        messageHandlers.append(handler)
-        logger.debug("Registered MessageHandler %s", handler)
+        handler = ContextMessageHandler(function, self.regex)
+        handlers.append(handler)
+        logger.debug("Registered ContextMessageHandler %s", handler)
         return function

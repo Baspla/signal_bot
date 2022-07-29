@@ -1,18 +1,12 @@
 import logging
 import os
 
-HOSTNAME = os.environ.get('SIGNAL_HOST')
-if HOSTNAME is None:
-    HOSTNAME = "localhost"
+HOSTNAME = os.environ.get('SIGNAL_HOST', "localhost")
 
 TELNUMBER = os.environ.get('SIGNAL_NUMBER')
 if TELNUMBER is None:
     raise SystemExit("Missing SIGNAL_NUMBER")
 
-POLLING_INTERVAL = os.environ.get('POLLING_INTERVAL')
-if POLLING_INTERVAL is None:
-    POLLING_INTERVAL = 15
-else:
-    POLLING_INTERVAL = int(POLLING_INTERVAL)
+POLLING_INTERVAL = int(os.environ.get('POLLING_INTERVAL', "15"))
 
-LOGGING_LEVEL = logging.DEBUG
+LOGGING_LEVEL = os.environ.get('LOG_LEVEL', "INFO")

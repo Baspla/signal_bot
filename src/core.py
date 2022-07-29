@@ -3,6 +3,7 @@ import logging
 import time
 from datetime import timedelta
 from decorator.message import MessageDecorator
+from decorator.context_message import ContextMessageDecorator
 from signal_cli.receiver import signalPolling
 from util.constants import POLLING_INTERVAL, LOGGING_LEVEL
 from util.envelope_utils import getSourceInformation
@@ -37,20 +38,24 @@ update_decorators = list()
 
 # noinspection PyUnresolvedReferences
 def main():
-    logging.basicConfig(handlers=[logging.FileHandler("../log/signalBot.log"), logging.StreamHandler()],
+
+    logging.basicConfig(handlers=[logging.FileHandler("../log/signalBot.log",'a', 'utf-8'), logging.StreamHandler()],
                         level=LOGGING_LEVEL)
 
     # Register Decorators # Add new Decorators here
     registerDecorator(MessageDecorator())
+    registerDecorator(ContextMessageDecorator())
 
     import handler.ping
+    import handler.translate
 
     # Start Core Loop
     tl = Timeloop()
-
+    logging.getLogger("timeloop").setLevel(logging.CRITICAL)
+    logger.info("Polling every %i seconds",POLLING_INTERVAL)
     @tl.job(interval=timedelta(seconds=POLLING_INTERVAL))
     def receive_polling():
-        logger.info("Fetching updates")
+        logger.debug("Fetching updates")
         results = polling_function()
         for x in range(len(results)):
             delivery = results[x]
