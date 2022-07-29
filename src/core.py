@@ -38,7 +38,8 @@ update_decorators = list()
 
 # noinspection PyUnresolvedReferences
 def main():
-    logging.basicConfig(handlers=[logging.FileHandler("../log/signalBot.log", 'a', 'utf-8'), logging.StreamHandler()],
+    # logging.FileHandler("../log/signalBot.log", 'a', 'utf-8'),
+    logging.basicConfig(handlers=[logging.StreamHandler()],
                         level=LOGGING_LEVEL)
 
     # Register Decorators # Add new Decorators here
