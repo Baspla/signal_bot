@@ -5,7 +5,7 @@ from datetime import timedelta
 from decorator.message import MessageDecorator
 from decorator.context_message import ContextMessageDecorator
 from signal_cli.receiver import signalPolling
-from util.constants import POLLING_INTERVAL, LOGGING_LEVEL, PROTOCOL,HOSTNAME,TELNUMBER
+from util.constants import POLLING_INTERVAL, LOGGING_LEVEL, printAllConstants
 from util.envelope_utils import getSourceInformation
 from timeloop import Timeloop
 
@@ -41,6 +41,9 @@ def main():
     # logging.FileHandler("../log/signalBot.log", 'a', 'utf-8'),
     logging.basicConfig(handlers=[logging.StreamHandler()],
                         level=LOGGING_LEVEL)
+
+    printAllConstants()
+
     # Register Decorators # Add new Decorators here
     registerDecorator(MessageDecorator())
     registerDecorator(ContextMessageDecorator())
