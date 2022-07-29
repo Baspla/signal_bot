@@ -12,7 +12,7 @@ def signalPolling():
     results = []
     try:
         logger.debug("Fetching Signal-CLI updates")
-        response = requests.get(f"https://{HOSTNAME}/v1/receive/{TELNUMBER}")
+        response = requests.get(f"{PROTOCOL}://{HOSTNAME}/v1/receive/{TELNUMBER}")
         results = response.json()
         logger.debug("Fetched update: %s", results)
     except ValueError as vexc:

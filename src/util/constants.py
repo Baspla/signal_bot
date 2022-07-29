@@ -10,3 +10,5 @@ if TELNUMBER is None:
 POLLING_INTERVAL = int(os.environ.get('POLLING_INTERVAL', "15"))
 
 LOGGING_LEVEL = os.environ.get('LOG_LEVEL', "INFO")
+
+PROTOCOL = os.environ.get('SIGNAL_PROTOCOL', "https")
