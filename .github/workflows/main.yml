@@ -21,4 +21,4 @@ jobs:
     - name: Docker Build
       run: docker build . --file Dockerfile --tag baspla/ehren_bank:latest
     - name: Docker Push
-      run: docker push ${{secrets.DOCKER_USER}}/ehren_bank
+      run: docker push ${{secrets.DOCKER_USER}}/signal_bot
