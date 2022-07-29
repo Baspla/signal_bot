@@ -10,8 +10,10 @@ logger = logging.getLogger("receiver")
 def signalPolling():
     results = []
     try:
-        logger.debug("Fetching Signal-CLI updates")
-        response = requests.get(f"{PROTOCOL}://{HOSTNAME}/v1/receive/{TELNUMBER}")
+        uri = f"{PROTOCOL}://{HOSTNAME}/v1/receive/{TELNUMBER}"
+        logger.debug("Fetching Signal-CLI updates from %s",uri)
+        response = requests.get(uri)
+        logger.debug("Parsing JSON Response")
         results = response.json()
         logger.debug("Fetched update: %s", results)
     except ValueError as vexc:
