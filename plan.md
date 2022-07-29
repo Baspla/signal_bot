@@ -2,6 +2,26 @@
 Loop alle X (1 Sekunde?) der mit /v1/receive die neuen Nachrichten abfragt.
 Auflösen der Nachrichten in Objekte.
 
+## Programmaufbau
+
+### Core
+Holt Updates vom Reciever und ruft Handler auf
+
+### HandlerDecorators
+Verschiedene @Decorator für Handler.
+Jeder HandlerDecorators führt eine Eigene Liste an registrierten Handlern und hat eine Grundbedinung (z.B. Hat message) bei der er erst seine Handler überpüft
+
+### Addons
+Registriert seine Handler
+
+### Sender
+Hat verschiedene Methoden um Nachrichten zu senden.
+Kann zum Testen gemocked werden.
+
+### Reciever
+Holt die Updates.
+Kann zum Testen ersetzt werden.
+
 ## Gelerntes
 
 - GroupId an die gesendet wird ist (bisher immer) "group." + BASE64(groupId aus update)
