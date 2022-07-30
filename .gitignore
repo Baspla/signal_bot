@@ -1,3 +1,5 @@
 venv/
 *.log
 py_playground/
+.idea/
+dist/

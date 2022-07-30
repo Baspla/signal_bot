@@ -1,4 +1,4 @@
-from model.source_information import SourceInformation
+from simple_signal_bot.model.source_information import SourceInformation
 
 
 def getSourceInformation(envelope):

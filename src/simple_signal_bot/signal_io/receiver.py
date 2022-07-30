@@ -2,7 +2,7 @@ import logging
 
 import requests
 
-from util.constants import HOSTNAME, TELNUMBER, PROTOCOL, TEST_MODE
+from simple_signal_bot.util.constants import HOSTNAME, TELNUMBER, PROTOCOL, TEST_MODE
 
 logger = logging.getLogger("receiver")
 
@@ -44,6 +44,35 @@ if TEST_MODE:
                     "expiresInSeconds": 0,
                     "viewOnce": False
                 }
-            }, "account": "+49...25"}]
+            }, "account": "+49...25"},
+            {"envelope": {
+                "source": "+49...10",
+                "sourceNumber": "+49...10",
+                "sourceUuid": "3d89...ea65",
+                "sourceName": "Tim Morgner",
+                "sourceDevice": 2,
+                "timestamp": 1659040118192,
+                "dataMessage": {
+                    "timestamp": 1659040118192,
+                    "message": "/test1",
+                    "expiresInSeconds": 0,
+                    "viewOnce": False
+                }
+            }, "account": "+49...25"},
+            {"envelope": {
+                "source": "+49...10",
+                "sourceNumber": "+49...10",
+                "sourceUuid": "3d89...ea65",
+                "sourceName": "Tim Morgner",
+                "sourceDevice": 2,
+                "timestamp": 1659040118192,
+                "dataMessage": {
+                    "timestamp": 1659040118192,
+                    "message": "/test2 arg1 arg2",
+                    "expiresInSeconds": 0,
+                    "viewOnce": False
+                }
+            }, "account": "+49...25"}
+        ]
         logger.debug("Fetched update: %s", results)
         return results;

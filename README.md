@@ -1,4 +1,3 @@
-# signal_bot
-Signal Bot für unseren Gruppenchat
-
-Das Image gibt es [hier](https://hub.docker.com/repository/docker/baspla/signal_bot).
+# signal-bot
+Signal-bot ist ein erweiterbarer Bot.
+Er interagiert mit der REST API bbernhard/signal-cli-rest-api

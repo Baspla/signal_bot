@@ -1,4 +1,4 @@
-from util.group_utils import groupContextFromId
+from simple_signal_bot.util.group_utils import groupContextFromId
 
 
 def getOptionalGroupContext(data_message):
