@@ -278,7 +278,7 @@ def funktion(envelope):
 
 ## Beispieldaten
 
-`[{"envelope":{...},"account":"+49...25"}},...]`
+`[{"envelope":{...},"account":"+49...25"},...]`
 
 ### Attatchment Message
 

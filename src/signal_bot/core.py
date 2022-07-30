@@ -2,12 +2,14 @@
 import logging
 import time
 from datetime import timedelta
-from decorator.message import MessageDecorator
-from decorator.context_message import ContextMessageDecorator
-from signal_cli.receiver import signalPolling
+from decorator_manager.message_manager import MessageManager
+from signal_io.receiver import receiveData
 from util.constants import POLLING_INTERVAL, LOGGING_LEVEL, printAllConstants
 from util.envelope_utils import getSourceInformation
 from timeloop import Timeloop
+# Add new Handlers here
+# noinspection PyUnresolvedReferences
+from handler import ping, translate
 
 logger = logging.getLogger("core")
 
@@ -23,16 +25,14 @@ def process_envelope(envelope):
         pass
 
 
-def registerDecorator(update_decorator):
-    logger.info("Registered UpdateDecorator %s", update_decorator)
-    update_decorators.append(update_decorator)
+def registerManager(manager):
+    logger.info("Registered Decorator Manager %s", manager)
+    update_decorators.append(manager)
 
 
 #
 # Core variables
 #
-
-polling_function = signalPolling
 update_decorators = list()
 
 
@@ -41,15 +41,10 @@ def main():
     # logging.FileHandler("../log/signalBot.log", 'a', 'utf-8'),
     logging.basicConfig(handlers=[logging.StreamHandler()],
                         level=LOGGING_LEVEL)
-
     printAllConstants()
 
-    # Register Decorators # Add new Decorators here
-    registerDecorator(MessageDecorator())
-    registerDecorator(ContextMessageDecorator())
-
-    import handler.ping
-    import handler.translate
+    # Register Decorators
+    registerManager(MessageManager())
 
     # Start Core Loop
     tl = Timeloop()
@@ -59,7 +54,7 @@ def main():
     @tl.job(interval=timedelta(seconds=POLLING_INTERVAL))
     def receive_polling():
         logger.debug("Fetching updates")
-        results = polling_function()
+        results = receiveData()
         for x in range(len(results)):
             delivery = results[x]
             if "envelope" in delivery:
