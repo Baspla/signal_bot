@@ -16,9 +16,9 @@ class CommandDecorator:
             def newfunc(source_information, data_message, context, message):
                 args = str(message).split(" ")
                 function(source_information, data_message, context, message, args)
-            regex = f"^/{cmd}"
+            regex = f"^/{cmd}\\s*"
             if cmd is None:
-                regex = f"^/{function.__name__}"
+                regex = f"^/{function.__name__}\\s*"
             handler = RegexHandler(newfunc, regex)
             self.regex_manager.register_handler(handler)
             logger.info("Hooked a CommandDecorator for %s", regex)

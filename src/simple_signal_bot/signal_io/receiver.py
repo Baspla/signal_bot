@@ -31,6 +31,10 @@ if TEST_MODE:
 
     def receiveData():
         logger.info("This is Test Data")
-        results = json.loads(TEST_DATA)
-        logger.debug("Fetched update: %s", results)
-        return results;
+        try:
+            results = json.loads(TEST_DATA)
+            logger.debug("Fetched update: %s", results)
+        except json.decoder.JSONDecodeError as jse:
+            logger.error("Test Data JSONDecodeError: %s", jse)
+            return []
+        return results
