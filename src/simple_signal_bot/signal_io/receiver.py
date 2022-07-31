@@ -1,8 +1,9 @@
+import json
 import logging
 
 import requests
 
-from simple_signal_bot.util.constants import HOSTNAME, TELNUMBER, PROTOCOL, TEST_MODE
+from simple_signal_bot.util.constants import HOSTNAME, TELNUMBER, PROTOCOL, TEST_MODE, TEST_DATA
 
 logger = logging.getLogger("receiver")
 
@@ -30,49 +31,6 @@ if TEST_MODE:
 
     def receiveData():
         logger.info("This is Test Data")
-        results = [
-            {"envelope": {
-                "source": "+49...10",
-                "sourceNumber": "+49...10",
-                "sourceUuid": "3d89...ea65",
-                "sourceName": "Tim Morgner",
-                "sourceDevice": 2,
-                "timestamp": 1659040118192,
-                "dataMessage": {
-                    "timestamp": 1659040118192,
-                    "message": "/ping",
-                    "expiresInSeconds": 0,
-                    "viewOnce": False
-                }
-            }, "account": "+49...25"},
-            {"envelope": {
-                "source": "+49...10",
-                "sourceNumber": "+49...10",
-                "sourceUuid": "3d89...ea65",
-                "sourceName": "Tim Morgner",
-                "sourceDevice": 2,
-                "timestamp": 1659040118192,
-                "dataMessage": {
-                    "timestamp": 1659040118192,
-                    "message": "/test1",
-                    "expiresInSeconds": 0,
-                    "viewOnce": False
-                }
-            }, "account": "+49...25"},
-            {"envelope": {
-                "source": "+49...10",
-                "sourceNumber": "+49...10",
-                "sourceUuid": "3d89...ea65",
-                "sourceName": "Tim Morgner",
-                "sourceDevice": 2,
-                "timestamp": 1659040118192,
-                "dataMessage": {
-                    "timestamp": 1659040118192,
-                    "message": "/test2 arg1 arg2",
-                    "expiresInSeconds": 0,
-                    "viewOnce": False
-                }
-            }, "account": "+49...25"}
-        ]
+        results = json.loads(TEST_DATA)
         logger.debug("Fetched update: %s", results)
         return results;

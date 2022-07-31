@@ -21,8 +21,10 @@ elif TEST_MODE.lower() is "false":
 else:
     TEST_MODE = True
 
+TEST_DATA = os.environ.get('SIGNAL_TESTDATA', "[]")
+
 
 def printAllConstants():
     _logger.info("Config: SIGNAL_HOST = %s, SIGNAL_NUMBER = %s, SIGNAL_PROTOCOL = %s,"
-                 " SIGNAL_INTERVAL = %s, SIGNAL_TEST = %s", HOSTNAME, TELNUMBER, PROTOCOL,
-                 POLLING_INTERVAL, TEST_MODE)
+                 " SIGNAL_INTERVAL = %s, SIGNAL_TEST = %s, SIGNAL_TESTDATA = %s", HOSTNAME, TELNUMBER, PROTOCOL,
+                 POLLING_INTERVAL, TEST_MODE,TEST_DATA)
