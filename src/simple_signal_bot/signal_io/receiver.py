@@ -17,11 +17,13 @@ def receiveData():
         logger.debug("Parsing JSON Response")
         results = response.json()
         logger.debug("Fetched update: %s", results)
+        if response.status_code != 200:
+            logger.error("Response Code: %s", response.status_code)
+            return []
     except ValueError as vexc:
         logger.error("ValueError: %s", vexc)
     except requests.exceptions.RequestException as e:
         logger.error("RequestException: %s", e)
-
     return results
 
 
